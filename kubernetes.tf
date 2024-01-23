@@ -26,7 +26,12 @@ resource "rke_cluster" "cluster" {
   ssh_key_path       = var.ssh_key_path
   enable_cri_dockerd = true
 
-  depends_on = [openstack_compute_instance_v2.instance, openstack_networking_floatingip_v2.floatingip]
+  delay_on_creation = 180
+
+  depends_on = [
+    openstack_compute_instance_v2.instance, 
+    openstack_networking_floatingip_v2.floatingip
+  ]
 }
 
 resource "local_file" "kubeconfig" {

@@ -114,3 +114,37 @@ resource "openstack_networking_secgroup_rule_v2" "allow_https_out" {
   port_range_max   = 443
   remote_ip_prefix = "0.0.0.0/0"
 }
+
+resource "openstack_networking_secgroup_rule_v2" "allow_http_in" {
+  security_group_id = openstack_networking_secgroup_v2.kube.id
+
+  direction        = "ingress"
+  ethertype        = "IPv4"
+  protocol         = "tcp"
+  port_range_min   = 80
+  port_range_max   = 80
+  remote_ip_prefix = "0.0.0.0/0"
+}
+
+resource "openstack_networking_secgroup_rule_v2" "allow_http_out" {
+  security_group_id = openstack_networking_secgroup_v2.kube.id
+
+  direction        = "egress"
+  ethertype        = "IPv4"
+  protocol         = "tcp"
+  port_range_min   = 80
+  port_range_max   = 80
+  remote_ip_prefix = "0.0.0.0/0"
+}
+
+resource "openstack_networking_secgroup_rule_v2" "allow_10248" {
+  security_group_id = openstack_networking_secgroup_v2.kube.id
+
+  direction        = "ingress"
+  ethertype        = "IPv4"
+  protocol         = "tcp"
+  port_range_min   = 10248
+  port_range_max   = 10248
+  remote_ip_prefix = "0.0.0.0/0"
+
+}
