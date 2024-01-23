@@ -6,6 +6,9 @@ export VERSION_STRING=5:24.0.0-1~debian.12~bookworm
 sudo apt update
 sudo apt install ca-certificates curl gnupg
 
+sudo mkdir /etc/docker
+echo '{ "live-restore": true }' | sudo tee /etc/docker/daemon.json > /dev/null
+
 # Add the repository to Apt sources:
 echo \
     "deb [arch=$(dpkg --print-architecture) trusted=yes] https://download.docker.com/linux/debian $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \

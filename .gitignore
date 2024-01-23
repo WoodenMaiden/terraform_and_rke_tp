@@ -1,6 +1,6 @@
 terraform-provider-rke-*
 .terraform/
-terraform.tfstate*
+*terraform.tfstate*
 .terraform.lock.hcl
 kubeconfig
 *.tfvars
