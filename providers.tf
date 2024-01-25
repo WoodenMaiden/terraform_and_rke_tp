@@ -8,6 +8,10 @@ terraform {
       source  = "rancher/rke"
       version = "1.4.3"
     }
+    helm = {
+      source  = "hashicorp/helm"
+      version = "2.12.1"
+    }
   }
 }
 
@@ -25,7 +29,15 @@ provider "openstack" {
   insecure  = true
 }
 
+provider "helm" {
+  kubernetes {
+    config_path = local_file.kubeconfig.filename
+  }
+}
 
+provider "kubernetes" {
+  config_path = local_file.kubeconfig.filename
+}
 
 output "master_ips" {
   value = [for m in slice(openstack_networking_floatingip_v2.floatingip, 0, var.nb_masters) : m.address]

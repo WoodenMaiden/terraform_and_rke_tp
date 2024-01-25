@@ -67,3 +67,10 @@ variable "ssh_key_path" {
   description = "SSH key path"
   default     = "~/.ssh/id_ed25519"
 }
+
+variable "ca_path" {
+  nullable = false
+  type = string
+  description = "CA path"
+  default = "./overcloud.ca"
+}

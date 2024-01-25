@@ -1,8 +1,8 @@
 resource "openstack_compute_instance_v2" "instance" {
   count       = var.nb_instances
-  name        = count.index < var.nb_masters ? "Rancher master N°${count.index}": "Rancher worker N°${count.index - var.nb_masters}"
-  image_name  = "Debian-12"
-  flavor_name = "m1.small"
+  name        = count.index < var.nb_masters ? "Rancher master N°${count.index + 1}" : "Rancher worker N°${count.index - var.nb_masters + 1}"
+  image_name  = "Debian-12-raw"
+  flavor_name = "m1.medram"
   key_pair    = var.key_name
 
   security_groups = [
