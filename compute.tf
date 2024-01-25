@@ -3,7 +3,7 @@ resource "openstack_compute_instance_v2" "instance" {
   name        = count.index < var.nb_masters ? "Rancher master N°${count.index + 1}" : "Rancher worker N°${count.index - var.nb_masters + 1}"
   image_name  = "Debian-12-raw"
   flavor_name = "m1.medram"
-  key_pair    = var.key_name
+  key_pair    = openstack_compute_keypair_v2.ssh.name
 
   security_groups = [
     openstack_networking_secgroup_v2.kube.name,
@@ -20,6 +20,23 @@ resource "openstack_compute_instance_v2" "instance" {
   user_data = file("${path.module}/scripts/install_docker.sh")
 }
 
+resource "openstack_compute_keypair_v2" "ssh" {
+  name = "yann"
+  region = var.region_name
+  public_key = file(var.ssh_pub_key_path)
+}
+
+# resource "local_file" "ssh_key" {
+#   filename = "ssh_key"
+#   file_permission = "0600"
+#   content = openstack_compute_keypair_v2.ssh.private_key
+# }
+
+# resource "local_file" "ssh_key_pub" {
+#   filename = "ssh_key_pub"
+#   file_permission = "0600"
+#   content = openstack_compute_keypair_v2.ssh.public_key
+# }
 
 resource "openstack_networking_secgroup_v2" "kube" {
   name        = "kubernetes"

@@ -61,16 +61,16 @@ variable "nb_instances" {
   }
 }
 
-variable "ssh_key_path" {
+variable "ssh_pub_key_path" {
   nullable    = false
   type        = string
   description = "SSH key path"
-  default     = "~/.ssh/id_ed25519"
+  default     = "~/.ssh/id_ed25519.pub"
 }
 
 variable "ca_path" {
-  nullable = false
-  type = string
+  nullable    = false
+  type        = string
   description = "CA path"
-  default = "./overcloud.ca"
+  default     = "./overcloud.ca"
 }

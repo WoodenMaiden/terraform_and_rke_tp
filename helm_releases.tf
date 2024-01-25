@@ -6,6 +6,8 @@ resource "helm_release" "wordpress" {
   namespace = "wordpress"
 
   create_namespace = true
+
+  depends_on = [ helm_release.openstack-cloud-controller-manager ]
 }
 
 resource "helm_release" "kubeview" {
@@ -14,6 +16,8 @@ resource "helm_release" "kubeview" {
 
   namespace        = "kubeview"
   create_namespace = true
+
+  depends_on = [ helm_release.openstack-cloud-controller-manager ]
 }
 
 resource "helm_release" "monitoring" {
@@ -23,6 +27,8 @@ resource "helm_release" "monitoring" {
 
   namespace        = "monitoring"
   create_namespace = true
+
+  depends_on = [ helm_release.openstack-cloud-controller-manager ]
 }
 
 

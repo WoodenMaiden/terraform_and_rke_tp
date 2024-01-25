@@ -4,21 +4,22 @@ terraform {
       source  = "terraform-provider-openstack/openstack"
       version = "1.53.0"
     }
-    rke = {
-      source  = "rancher/rke"
-      version = "1.4.3"
+    k0s = {
+      source  = "danielskowronski/k0s"
+      version = "0.2.2-rc1"
     }
     helm = {
       source  = "hashicorp/helm"
       version = "2.12.1"
     }
+    kubernetes = {
+      source = "hashicorp/kubernetes"
+      version = "2.25.2"
+    }
   }
 }
 
-provider "rke" {
-  debug    = true
-  log_file = "/tmp/rke.log"
-}
+provider "k0s" {}
 
 provider "openstack" {
   tenant_id = var.project_id
@@ -50,6 +51,14 @@ output "worker_ips" {
 output "all" {
   value = [for f in openstack_networking_floatingip_v2.floatingip : f.address]
 }
+
+# output "private_key_path" {
+#   value = local_file.ssh_key.filename
+# }
+
+# output "public_key_path" {
+#   value = local_file.ssh_key_pub.filename
+# }
 
 output "kubeconfig" {
   value = local_file.kubeconfig.filename
