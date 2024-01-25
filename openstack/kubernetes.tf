@@ -13,7 +13,6 @@ resource "k0s_cluster" "cluster" {
         address  = m.address
         port     = 22
         user     = "debian"
-        # key_path = local_file.ssh_key_pub.filename
       }
     }
     ], [
@@ -28,7 +27,6 @@ resource "k0s_cluster" "cluster" {
         address  = s.address
         port     = 22
         user     = "debian"
-        # key_path = local_file.ssh_key_pub.filename
       }
     }
   ])

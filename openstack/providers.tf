@@ -8,14 +8,6 @@ terraform {
       source  = "danielskowronski/k0s"
       version = "0.2.2-rc1"
     }
-    helm = {
-      source  = "hashicorp/helm"
-      version = "2.12.1"
-    }
-    kubernetes = {
-      source = "hashicorp/kubernetes"
-      version = "2.25.2"
-    }
   }
 }
 
@@ -30,16 +22,6 @@ provider "openstack" {
   insecure  = true
 }
 
-provider "helm" {
-  kubernetes {
-    config_path = local_file.kubeconfig.filename
-  }
-}
-
-provider "kubernetes" {
-  config_path = local_file.kubeconfig.filename
-}
-
 output "master_ips" {
   value = [for m in slice(openstack_networking_floatingip_v2.floatingip, 0, var.nb_masters) : m.address]
 }
@@ -51,14 +33,6 @@ output "worker_ips" {
 output "all" {
   value = [for f in openstack_networking_floatingip_v2.floatingip : f.address]
 }
-
-# output "private_key_path" {
-#   value = local_file.ssh_key.filename
-# }
-
-# output "public_key_path" {
-#   value = local_file.ssh_key_pub.filename
-# }
 
 output "kubeconfig" {
   value = local_file.kubeconfig.filename
